@@ -6,10 +6,7 @@ class Image
 
   def output_image
     @arr.each do |row|
-      row.each do |pixel|
-        print pixel
-      end
-      print "\n"
+      puts row.join
     end
   end
 
