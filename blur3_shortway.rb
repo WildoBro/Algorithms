@@ -13,14 +13,26 @@ class Image
     end
   end  
 
-  def blur!
-    ones_locations.each do |coordinate|
-      # Change all surrounding pixels to 1
-      change_pixel_above(*coordinate)
-      change_pixel_right(*coordinate)
-      change_pixel_down(*coordinate)
-      change_pixel_left(*coordinate)
-    end
+  # def blur!
+  #   ones_locations.each do |coordinate|
+  #     # Change all surrounding pixels to 1
+  #     change_pixel_above(*coordinate)
+  #     change_pixel_right(*coordinate)
+  #     change_pixel_down(*coordinate)
+  #     change_pixel_left(*coordinate)
+  #   end
+  # end
+
+  def blur!(distance)
+      (distance).times do
+        ones_locations.each do |coordinate|
+          # Change all surrounding pixels to 1
+          change_pixel_above(*coordinate)
+          change_pixel_right(*coordinate)
+          change_pixel_down(*coordinate)
+          change_pixel_left(*coordinate)
+        end
+      end
   end
   
   private
@@ -39,7 +51,9 @@ class Image
   end
 
   def change_pixel_above(y, x)
-     @image[y - 1][x] = 1
+    if @image[y - 1][x]
+      @image[y - 1][x] = 1
+    end
   end
 
   def change_pixel_right(y, x)
@@ -63,12 +77,14 @@ class Image
 end
 
 image = Image.new([
-  [0, 0, 0, 0],
-  [0, 1, 0, 0],
-  [0, 0, 0, 1],
-  [0, 0, 0, 0]
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1, 0],
+  [0, 0, 0, 1, 0, 0],
+  [0, 1, 0, 0, 1, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0, 0]
 ])
 
-image.blur!
+image.blur!(2)
 image.output_image
 
